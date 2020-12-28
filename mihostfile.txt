@@ -1,0 +1,2 @@
+10.3.17.83 slots=2 max_slots=4
+10.3.17.73 slots=2 max_slots=4
