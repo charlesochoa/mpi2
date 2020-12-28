@@ -9,13 +9,13 @@ int main(int argc, char* argv[]) {
     int this_proc;
     int task_id;
     int i;
-    int n; /* n is the number of pairs */
-    int m = -1; /* m is the number of bounces */
-    int p = -1; /* p is the size of the packet */
+    int n;      /* number of pairs */
+    int m = -1; /* number of bounces */
+    int p = -1; /* size of the packets */
     struct timeval t1, t2;
  
     MPI_Init(&argc, &argv);
-    MPI_Comm_size(MPI_COMM_WORLD, &n);           // Number of processes
+    MPI_Comm_size(MPI_COMM_WORLD, &n);           // number of processes
     MPI_Comm_rank(MPI_COMM_WORLD, &this_proc);   // PID
 
     i = 0;
