@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <mpi.h>
 #include <sys/time.h>
+#include <string.h>
  
 int main(int argc, char* argv[]) {
     int this_proc;
@@ -23,12 +24,12 @@ int main(int argc, char* argv[]) {
         if (strcmp(argv[i], "-p") != 0) {
             printf("aaaaa");
             p = atoi(argv[i+1]);
-            printf("%d", p)
+            printf("%d", p);
             i++;
         } else if (strcmp(argv[i], "-m") != 0) {
             printf("bbbbb");
             m = atoi(argv[i+1]);
-            printf("%d", m)
+            printf("%d", m);
             i++;
         }
         i++;
