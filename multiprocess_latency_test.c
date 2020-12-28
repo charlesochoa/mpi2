@@ -18,8 +18,9 @@ int main(int argc, char* argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &this_proc);   // PID
 
     m = atoi(argv[1]);
-
+    i = 0;
     while (i < argc) {
+        printf("%s\n", argv[i]);
         if (argv[i] == "-p") {
             p = atoi(argv[i+1]);
             i++;
