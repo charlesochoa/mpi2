@@ -20,12 +20,12 @@ int main(int argc, char* argv[]) {
     i = 0;
     while (i < argc) {
         printf("%s\n", argv[i]);
-        if (argv[i] == "-p") {
+        if (strcmp(argv[i], "-p") != 0) {
             printf("aaaaa");
             p = atoi(argv[i+1]);
             printf("%d", p)
             i++;
-        } else if (argv[i] == "-m") {
+        } else if (strcmp(argv[i], "-m") != 0) {
             printf("bbbbb");
             m = atoi(argv[i+1]);
             printf("%d", m)
