@@ -20,16 +20,11 @@ int main(int argc, char* argv[]) {
 
     i = 0;
     while (i < argc) {
-        printf("%s\n", argv[i]);
         if (strcmp(argv[i], "-p") == 0) {
-            printf("aaaaa\n");
             p = atoi(argv[i+1]);
-            printf("%d\n", p);
             i++;
         } else if (strcmp(argv[i], "-m") == 0) {
-            printf("bbbbb\n");
             m = atoi(argv[i+1]);
-            printf("%d\n", m);
             i++;
         }
         i++;
@@ -46,19 +41,36 @@ int main(int argc, char* argv[]) {
     if (this_proc % 2 == 0) {
         task_id = this_proc;
         for (i = 0; i < m; i++) {
+            // ********************** SEND **********************
             gettimeofday(&t1, NULL);
             MPI_Send(&task_id, 1, MPI_INT, this_proc + 1, 0, MPI_COMM_WORLD);
             gettimeofday(&t2, NULL);
             int t_send = (t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec - t1.tv_usec;
             printf("-- [%d] Process [%d] sent task id %d to process %d, send time was %d microseconds.\n", i, this_proc, task_id, this_proc + 1, t_send);
+        
+            // ********************** RECEIVE **********************
+            gettimeofday(&t1, NULL);
+            MPI_Recv(&task_id, 1, MPI_INT, this_proc + 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            gettimeofday(&t2, NULL);
+            int t_recv = (t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec - t1.tv_usec;
+            printf("-- [%d] Process [%d] received task id %d from process [%d], receive time was %d microseconds.\n", i, this_proc, task_id, this_proc - 1, t_recv);
         }
     } else {
         for (i = 0; i < m; i++) {
+            // ********************** RECEIVE **********************
             gettimeofday(&t1, NULL);
             MPI_Recv(&task_id, 1, MPI_INT, this_proc - 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             gettimeofday(&t2, NULL);
             int t_recv = (t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec - t1.tv_usec;
             printf("-- [%d] Process [%d] received task id %d from process [%d], receive time was %d microseconds.\n", i, this_proc, task_id, this_proc - 1, t_recv);
+        
+            // ********************** SEND **********************
+            gettimeofday(&t1, NULL);
+            MPI_Send(&task_id, 1, MPI_INT, this_proc - 1, 0, MPI_COMM_WORLD);
+            gettimeofday(&t2, NULL);
+            int t_send = (t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec - t1.tv_usec;
+            printf("-- [%d] Process [%d] sent task id %d to process %d, send time was %d microseconds.\n", i, this_proc, task_id, this_proc + 1, t_send);
+
         }
     };
 
