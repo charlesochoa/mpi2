@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     int i;
     int n; /* n is the number of pairs */
     int m = -1; /* m is the number of bounces */
-    int p = -1;
+    int p = -1; /* p is the size of the packet */
     struct timeval t1, t2;
  
     MPI_Init(&argc, &argv);
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
     }
             
     if ((m < 0) || (p < 0)) {
-        printf("Missing argument for number of bounces or size of packages!\n");
+        printf("Missing argument for number of bounces or the size of the packets!\n");
         MPI_Finalize();
         return 0;
     }
