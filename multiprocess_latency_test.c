@@ -21,15 +21,15 @@ int main(int argc, char* argv[]) {
     i = 0;
     while (i < argc) {
         printf("%s\n", argv[i]);
-        if (strcmp(argv[i], "-p") != 0) {
-            printf("aaaaa");
+        if (strcmp(argv[i], "-p") == 0) {
+            printf("aaaaa\n");
             p = atoi(argv[i+1]);
-            printf("%d", p);
+            printf("%d\n", p);
             i++;
-        } else if (strcmp(argv[i], "-m") != 0) {
-            printf("bbbbb");
+        } else if (strcmp(argv[i], "-m") == 0) {
+            printf("bbbbb\n");
             m = atoi(argv[i+1]);
-            printf("%d", m);
+            printf("%d\n", m);
             i++;
         }
         i++;
