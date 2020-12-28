@@ -17,15 +17,18 @@ int main(int argc, char* argv[]) {
     MPI_Comm_size(MPI_COMM_WORLD, &n);           // Number of processes
     MPI_Comm_rank(MPI_COMM_WORLD, &this_proc);   // PID
 
-    m = atoi(argv[1]);
     i = 0;
     while (i < argc) {
         printf("%s\n", argv[i]);
         if (argv[i] == "-p") {
+            printf("aaaaa");
             p = atoi(argv[i+1]);
+            printf("%d", p)
             i++;
         } else if (argv[i] == "-m") {
+            printf("bbbbb");
             m = atoi(argv[i+1]);
+            printf("%d", m)
             i++;
         }
         i++;
