@@ -79,7 +79,6 @@ int main(int argc, char* argv[]) {
             gettimeofday(&t2, NULL);
             int t_send = (t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec - t1.tv_usec;
             printf("-- Bounce number [%d] * Process [%d] sent task id %d to process %d, send time was %d microseconds.\n", i, this_proc, task_id, this_proc - 1, t_send);
-
         }
     };
 
