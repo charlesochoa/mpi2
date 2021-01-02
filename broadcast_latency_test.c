@@ -31,18 +31,17 @@ void my_broadcast(int rank, int total_processes, int p, int size_of_int) {
 }
  
 int main(int argc, char* argv[]) {
-    int this_proc;
+    int rank;
     int i;
     int n;      /* number of pairs */
     int p = -1; /* size of the packets */
-    struct timeval t1, t2;
     int size_of_int = sizeof(int);
     double start;
     double end;
  
     MPI_Init(&argc, &argv);
-    MPI_Comm_size(MPI_COMM_WORLD, &n);           // number of processes
-    MPI_Comm_rank(MPI_COMM_WORLD, &this_proc);   // PID
+    MPI_Comm_size(MPI_COMM_WORLD, &n);      // number of processes
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);   // PID
 
     i = 0;
     while (i < argc) {
@@ -67,10 +66,10 @@ int main(int argc, char* argv[]) {
     MPI_Bcast(sendbuffer, p, MPI_INT, 0, MPI_COMM_WORLD);
     end = MPI_Wtime();
     double t_bcast = end - start;
-    printf("-- Process [%d] received a broadcast packet of size %d bytes from process [0], broadcast time was %f seconds.\n", this_proc, p * size_of_int, t_bcast);
+    printf("-- Process [%d] received a broadcast packet of size %d bytes from process [0], broadcast time was %f seconds.\n", rank, p * size_of_int, t_bcast);
 
     printf("******* My broadcast results:\n");
-    my_broadcast(this_proc, n, p, size_of_int);
+    my_broadcast(rank, n, p, size_of_int);
 
     MPI_Finalize();
     return 0;
