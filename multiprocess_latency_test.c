@@ -39,8 +39,6 @@ int main(int argc, char* argv[]) {
         MPI_Finalize();
         return 0;
     }
- 
-    printf("Hello word! I'm process number %d of %d processes.\n", this_proc, n);
 
     // Packet
     int sendbuffer[p];

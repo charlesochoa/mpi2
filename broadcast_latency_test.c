@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
-#include <sys/time.h>
 #include <string.h>
 
 void my_broadcast(int rank, int total_processes, int p, int size_of_int) {
@@ -38,7 +37,6 @@ int main(int argc, char* argv[]) {
     int p = -1; /* size of the packets */
     struct timeval t1, t2;
     int size_of_int = sizeof(int);
-    int *sendbuffer;
     double start;
     double end;
  
@@ -56,18 +54,13 @@ int main(int argc, char* argv[]) {
     }
             
     if (p < 0) {
-        printf("Missing the size of the packets arguments!\n");
+        printf("Missing the size of the packets argument!\n");
         MPI_Finalize();
         return 0;
     }
- 
-    printf("Hello word! I'm process number %d of %d processes.\n", this_proc, n);
 
-    if (this_proc == 0) {
-        // Packet
-        int master_process_buffer[p];
-        sendbuffer = master_process_buffer;
-    }
+    // Packet
+    int sendbuffer[p];
 
     printf("******* MPI_Bcast results:\n");
     start = MPI_Wtime();
