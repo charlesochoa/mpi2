@@ -9,6 +9,8 @@ void my_broadcast(int rank, int total_processes, int p, int size_of_int) {
     // Packet
     int sendbuffer[p];
     int recvbuffer[p];
+    double start;
+    double end;
 
     if (rank == 0) {
         for (int i = 1; i < total_processes; i++) {
@@ -37,6 +39,8 @@ int main(int argc, char* argv[]) {
     struct timeval t1, t2;
     int size_of_int = sizeof(int);
     int *sendbuffer;
+    double start;
+    double end;
  
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &n);           // number of processes
