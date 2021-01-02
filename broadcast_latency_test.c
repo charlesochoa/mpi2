@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
     double t_bcast = end - start;
     printf("-- Process [%d] received a broadcast packet of size %d from process [0], broadcast time was %f seconds.\n", this_proc, p * size_of_int, t_bcast);
 
-    printf("******* MPI_Bcast results:\n");
+    printf("******* My broadcast results:\n");
     my_broadcast(this_proc, n, p, size_of_int);
 
     MPI_Finalize();
