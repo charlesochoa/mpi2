@@ -2,18 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
-#include <sys/time.h>
 #include <string.h>
  
 int main(int argc, char* argv[]) {
     int this_proc;
-    int task_id;
     int i;
     int n;      /* number of pairs */
     int m = -1; /* number of bounces */
     int p = -1; /* size of the packets */
-    struct timeval t1, t2;
- 
+    int size_of_int;
+
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &n);           // number of processes
     MPI_Comm_rank(MPI_COMM_WORLD, &this_proc);   // PID
@@ -48,37 +46,39 @@ int main(int argc, char* argv[]) {
     int sendbuffer[p];
     int recvbuffer[p];
 
+    int size_of_int = sizeof(int);
+
     if (this_proc % 2 == 0) {
         for (i = 0; i < m; i++) {
             // ********************** SEND **********************
-            gettimeofday(&t1, NULL);
+            start = MPI_Wtime();
             MPI_Send(sendbuffer, p, MPI_INT, this_proc + 1, 0, MPI_COMM_WORLD);
-            gettimeofday(&t2, NULL);
-            int t_send = (t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec - t1.tv_usec;
-            printf("-- Bounce number [%d] * Process [%d] sent task id %d to process %d, send time was %d microseconds.\n", i, this_proc, task_id, this_proc + 1, t_send);
-        
+            end = MPI_Wtime();
+            double t_send = end - start;
+            printf("-- Bounce number [%d] * Process [%d] sent packet of size %d to process [%d], send time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc - 1, t_send);
+
             // ********************** RECEIVE **********************
-            gettimeofday(&t1, NULL);
+            start = MPI_Wtime();
             MPI_Recv(recvbuffer, p, MPI_INT, this_proc + 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            gettimeofday(&t2, NULL);
-            int t_recv = (t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec - t1.tv_usec;
-            printf("-- Bounce number [%d] * Process [%d] received task id %d from process [%d], receive time was %d microseconds.\n", i, this_proc, task_id, this_proc + 1, t_recv);
+            end = MPI_Wtime();
+            double t_recv = end - start;
+            printf("-- Bounce number [%d] * Process [%d] received packet of size %d from process [%d], receive time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc + 1, t_recv);
         }
     } else {
         for (i = 0; i < m; i++) {
             // ********************** RECEIVE **********************
-            gettimeofday(&t1, NULL);
+            start = MPI_Wtime();
             MPI_Recv(recvbuffer, p, MPI_INT, this_proc - 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            gettimeofday(&t2, NULL);
-            int t_recv = (t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec - t1.tv_usec;
-            printf("-- Bounce number [%d] * Process [%d] received task id %d from process [%d], receive time was %d microseconds.\n", i, this_proc, task_id, this_proc - 1, t_recv);
-        
+            end = MPI_Wtime();
+            double t_recv = end - start;
+            printf("-- Bounce number [%d] * Process [%d] received packet of size %d from process [%d], receive time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc + 1, t_recv);
+
             // ********************** SEND **********************
-            gettimeofday(&t1, NULL);
+            start = MPI_Wtime();
             MPI_Send(sendbuffer, p, MPI_INT, this_proc - 1, 0, MPI_COMM_WORLD);
-            gettimeofday(&t2, NULL);
-            int t_send = (t2.tv_sec - t1.tv_sec) * 1000000 + t2.tv_usec - t1.tv_usec;
-            printf("-- Bounce number [%d] * Process [%d] sent task id %d to process %d, send time was %d microseconds.\n", i, this_proc, task_id, this_proc - 1, t_send);
+            end = MPI_Wtime();
+            double t_send = end - start;
+            printf("-- Bounce number [%d] * Process [%d] sent packet of size %d to process [%d], send time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc - 1, t_send);
         }
     };
 
