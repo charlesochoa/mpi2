@@ -19,7 +19,7 @@ void my_broadcast(int rank, int total_processes, int p, int size_of_int) {
             MPI_Send(sendbuffer, p, MPI_INT, i, 0, MPI_COMM_WORLD);
             end = MPI_Wtime();
             double t_send = end - start;
-            printf("-- Process [%d] sent packet of size %d to process [%d], send time was %f seconds.\n", rank, p * size_of_int, i, t_send);
+            printf("-- Process [%d] sent packet of size %d bytes to process [%d], send time was %f seconds.\n", rank, p * size_of_int, i, t_send);
         }
     } else {
         // ********************** RECEIVE **********************
@@ -27,7 +27,7 @@ void my_broadcast(int rank, int total_processes, int p, int size_of_int) {
         MPI_Recv(recvbuffer, p, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         end = MPI_Wtime();
         double t_recv = end - start;
-        printf("-- Process [%d] received packet of size %d from process [%d], receive time was %f seconds.\n", rank, p * size_of_int, 0, t_recv);
+        printf("-- Process [%d] received packet of size %d bytes from process [%d], receive time was %f seconds.\n", rank, p * size_of_int, 0, t_recv);
     }
 }
  
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
     MPI_Bcast(sendbuffer, p, MPI_INT, 0, MPI_COMM_WORLD);
     end = MPI_Wtime();
     double t_bcast = end - start;
-    printf("-- Process [%d] received a broadcast packet of size %d from process [0], broadcast time was %f seconds.\n", this_proc, p * size_of_int, t_bcast);
+    printf("-- Process [%d] received a broadcast packet of size %d bytes from process [0], broadcast time was %f seconds.\n", this_proc, p * size_of_int, t_bcast);
 
     printf("******* My broadcast results:\n");
     my_broadcast(this_proc, n, p, size_of_int);

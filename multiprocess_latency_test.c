@@ -55,14 +55,14 @@ int main(int argc, char* argv[]) {
             MPI_Send(sendbuffer, p, MPI_INT, this_proc + 1, 0, MPI_COMM_WORLD);
             end = MPI_Wtime();
             double t_send = end - start;
-            printf("-- Bounce number [%d] * Process [%d] sent packet of size %d to process [%d], send time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc - 1, t_send);
+            printf("-- Bounce number [%d] * Process [%d] sent packet of size %d bytes to process [%d], send time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc - 1, t_send);
 
             // ********************** RECEIVE **********************
             start = MPI_Wtime();
             MPI_Recv(recvbuffer, p, MPI_INT, this_proc + 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             end = MPI_Wtime();
             double t_recv = end - start;
-            printf("-- Bounce number [%d] * Process [%d] received packet of size %d from process [%d], receive time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc + 1, t_recv);
+            printf("-- Bounce number [%d] * Process [%d] received packet of size %d bytes from process [%d], receive time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc + 1, t_recv);
         }
     } else {
         for (i = 0; i < m; i++) {
@@ -71,14 +71,14 @@ int main(int argc, char* argv[]) {
             MPI_Recv(recvbuffer, p, MPI_INT, this_proc - 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             end = MPI_Wtime();
             double t_recv = end - start;
-            printf("-- Bounce number [%d] * Process [%d] received packet of size %d from process [%d], receive time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc + 1, t_recv);
+            printf("-- Bounce number [%d] * Process [%d] received packet of size %d bytes from process [%d], receive time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc + 1, t_recv);
 
             // ********************** SEND **********************
             start = MPI_Wtime();
             MPI_Send(sendbuffer, p, MPI_INT, this_proc - 1, 0, MPI_COMM_WORLD);
             end = MPI_Wtime();
             double t_send = end - start;
-            printf("-- Bounce number [%d] * Process [%d] sent packet of size %d to process [%d], send time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc - 1, t_send);
+            printf("-- Bounce number [%d] * Process [%d] sent packet of size %d bytes to process [%d], send time was %f seconds.\n", i, this_proc, p * size_of_int, this_proc - 1, t_send);
         }
     };
 
