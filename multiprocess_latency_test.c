@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
             MPI_Recv(recvbuffer, p, MPI_INT, rank + 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             end = MPI_Wtime();
             double t_bounce = end - start;
-            printf("%d,%d,%d,%f\n", i, rank, p * size_of_int, t_bounce);
+            printf("%d,%d,%d,%d,%f\n", i, rank, rank +1, p * size_of_int, t_bounce);
         }
     } else {
         for (i = 0; i < m; i++) {
