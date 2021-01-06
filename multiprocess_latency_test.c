@@ -11,6 +11,7 @@ int main(int argc, char* argv[]) {
     int m = -1; /* number of bounces */
     int p = -1; /* size of the packets */
     int size_of_int = sizeof(int);
+    double start, end;
 
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &n);      // number of processes
