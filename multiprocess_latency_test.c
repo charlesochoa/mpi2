@@ -44,39 +44,28 @@ int main(int argc, char* argv[]) {
     int sendbuffer[p];
     int recvbuffer[p];
 
+    start = MPI_Wtime();
     if (rank % 2 == 0) {
         for (i = 0; i < m; i++) {
             // ********************** SEND **********************
             start = MPI_Wtime();
             MPI_Send(sendbuffer, p, MPI_INT, rank + 1, 0, MPI_COMM_WORLD);
-            end = MPI_Wtime();
-            double t_send = end - start;
-            printf("-- Bounce number [%d] * Process [%d] sent packet of size %d bytes to process [%d], send time was %f seconds.\n", i, rank, p * size_of_int, rank - 1, t_send);
-
             // ********************** RECEIVE **********************
-            start = MPI_Wtime();
             MPI_Recv(recvbuffer, p, MPI_INT, rank + 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             end = MPI_Wtime();
-            double t_recv = end - start;
-            printf("-- Bounce number [%d] * Process [%d] received packet of size %d bytes from process [%d], receive time was %f seconds.\n", i, rank, p * size_of_int, rank + 1, t_recv);
+            double t_bounce = end - start;
+            printf("%d,%d,%f", i, p * size_of_int, t_bounce)
         }
     } else {
         for (i = 0; i < m; i++) {
             // ********************** RECEIVE **********************
-            start = MPI_Wtime();
             MPI_Recv(recvbuffer, p, MPI_INT, rank - 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            end = MPI_Wtime();
-            double t_recv = end - start;
-            printf("-- Bounce number [%d] * Process [%d] received packet of size %d bytes from process [%d], receive time was %f seconds.\n", i, rank, p * size_of_int, rank + 1, t_recv);
-
             // ********************** SEND **********************
-            start = MPI_Wtime();
             MPI_Send(sendbuffer, p, MPI_INT, rank - 1, 0, MPI_COMM_WORLD);
-            end = MPI_Wtime();
-            double t_send = end - start;
-            printf("-- Bounce number [%d] * Process [%d] sent packet of size %d bytes to process [%d], send time was %f seconds.\n", i, rank, p * size_of_int, rank - 1, t_send);
         }
     };
+    end = MPI_Wtime();
+    double t_exec = end - start;
 
     MPI_Finalize();
     return 0;
