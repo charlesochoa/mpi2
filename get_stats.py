@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("./csv/mbt_s1.csv", sep=",")
+df = pd.read_csv("./csv/mbt_s4.csv", sep=",")
 
 df_p_1 = df[(df.packet_size == 4)]
 df_p_1 = df_p_1.sort_values(by=["exp"], ascending=True)
@@ -22,7 +22,7 @@ lines = df_p_1[(df_p_1.src == 2)][["exp", "time"]].plot.line(x="exp", linestyle=
 lines = df_p_1[(df_p_1.src == 4)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 lines = df_p_1[(df_p_1.src == 6)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 plt.title("0.0004MB Packet Size")
-plt.xlabel("Bounce")
+plt.xlabel("Test")
 plt.ylabel("Time")
 plt.gca().legend(('Source process: 0', 'Source process: 2', 'Source process: 4', 'Source process: 6'))
 plt.show(block=True)
@@ -33,7 +33,7 @@ lines = df_p_10[(df_p_10.src == 2)][["exp", "time"]].plot.line(x="exp", linestyl
 lines = df_p_10[(df_p_10.src == 4)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 lines = df_p_10[(df_p_10.src == 6)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 plt.title("0.004MB Packet Size")
-plt.xlabel("Bounce")
+plt.xlabel("Test")
 plt.ylabel("Time")
 plt.gca().legend(('Source process: 0', 'Source process: 2', 'Source process: 4', 'Source process: 6'))
 plt.show(block=True)
@@ -44,7 +44,7 @@ lines = df_p_100[(df_p_100.src == 2)][["exp", "time"]].plot.line(x="exp", linest
 lines = df_p_100[(df_p_100.src == 4)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 lines = df_p_100[(df_p_100.src == 6)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 plt.title("0.4MB Packet Size")
-plt.xlabel("Bounce")
+plt.xlabel("Test")
 plt.ylabel("Time")
 plt.gca().legend(('Source process: 0', 'Source process: 2', 'Source process: 4', 'Source process: 6'))
 plt.show(block=True)
@@ -55,7 +55,7 @@ lines = df_p_1000[(df_p_1000.src == 2)][["exp", "time"]].plot.line(x="exp", line
 lines = df_p_1000[(df_p_1000.src == 4)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 lines = df_p_1000[(df_p_1000.src == 6)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 plt.title("4MB Packet Size")
-plt.xlabel("Bounce")
+plt.xlabel("Test")
 plt.ylabel("Time")
 plt.gca().legend(('Source process: 0', 'Source process: 2', 'Source process: 4', 'Source process: 6'))
 plt.show(block=True)
@@ -66,7 +66,7 @@ lines = df_p_10000[(df_p_10000.src == 2)][["exp", "time"]].plot.line(x="exp", li
 lines = df_p_10000[(df_p_10000.src == 4)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 lines = df_p_10000[(df_p_10000.src == 6)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 plt.title("40MB Packet Size")
-plt.xlabel("Bounce")
+plt.xlabel("Test")
 plt.ylabel("Time")
 plt.gca().legend(('Source process: 0', 'Source process: 2', 'Source process: 4', 'Source process: 6'))
 plt.show(block=True)
@@ -77,7 +77,7 @@ lines = df_p_100000[(df_p_100000.src == 2)][["exp", "time"]].plot.line(x="exp", 
 lines = df_p_100000[(df_p_100000.src == 4)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 lines = df_p_100000[(df_p_100000.src == 6)][["exp", "time"]].plot.line(x="exp", linestyle="-",  ax=ax)
 plt.title("400MB Packet Size")
-plt.xlabel("Bounce")
+plt.xlabel("Test")
 plt.ylabel("Time")
 plt.gca().legend(('Source process: 0', 'Source process: 2', 'Source process: 4', 'Source process: 6'))
 plt.show(block=True)
