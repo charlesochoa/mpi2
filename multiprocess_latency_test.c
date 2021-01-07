@@ -48,8 +48,8 @@ int main(int argc, char* argv[]) {
     start = MPI_Wtime();
     if (rank % 2 == 0) {
         for (i = 0; i < m; i++) {
-            // ********************** SEND **********************
             start = MPI_Wtime();
+            // ********************** SEND **********************
             MPI_Send(sendbuffer, p, MPI_INT, rank + 1, 0, MPI_COMM_WORLD);
             // ********************** RECEIVE **********************
             MPI_Recv(recvbuffer, p, MPI_INT, rank + 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
