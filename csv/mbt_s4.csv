@@ -1,3 +1,4 @@
+exp,src,dst,number_of_packets,packet_size,time
 1,2,3,100,4,0.000078
 1,6,7,100,4,0.000065
 2,6,7,100,4,0.000013
