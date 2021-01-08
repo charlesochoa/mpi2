@@ -55,9 +55,9 @@ int main(int argc, char* argv[]) {
     MPI_Bcast(sendbuffer, p, MPI_INT, 0, MPI_COMM_WORLD);
     end = MPI_Wtime();
     double t_bcast = end - start;
-    // version,dst,packet_size,time
-    if(rank==0){
-        printf("MPI_Bcast,%d,%d,%f,%s\n", rank, p * size_of_int, t_bcast,name);
+    // version,dst,packet_size,time,name
+    if (rank == 0) {
+        printf("MPI_Bcast,%d,%d,%f,%s\n", rank, p * size_of_int, t_bcast, name);
     }
     
 
@@ -65,9 +65,9 @@ int main(int argc, char* argv[]) {
     my_broadcast(rank, n, p, size_of_int);
     end = MPI_Wtime();
     double t_my_bcast = end - start;
-    // version,dst,packet_size,time
-    if(rank==0){
-        printf("my_broadcast,%d,%d,%f,%s\n", rank, p * size_of_int, t_my_bcast,name);
+    // version,dst,packet_size,time,name
+    if (rank == 0) {
+        printf("my_broadcast,%d,%d,%f,%s\n", rank, p * size_of_int, t_my_bcast, name);
     }
     MPI_Finalize();
     return 0;
