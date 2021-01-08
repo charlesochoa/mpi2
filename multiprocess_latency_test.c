@@ -12,7 +12,6 @@ int main(int argc, char* argv[]) {
     int p = -1; /* size of the packets */
     int size_of_int = sizeof(int);
     double start, end;
-
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &n);      // number of processes
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);   // PID
@@ -44,7 +43,9 @@ int main(int argc, char* argv[]) {
     // Packet
     int sendbuffer[p];
     int recvbuffer[p];
-
+    int  rlen;
+    char name[MPI_MAX_PROCESSOR_NAME];
+    MPI_Get_processor_name( name, &rlen );
     start = MPI_Wtime();
     if (rank % 2 == 0) {
         for (i = 0; i < m; i++) {
@@ -55,7 +56,7 @@ int main(int argc, char* argv[]) {
             MPI_Recv(recvbuffer, p, MPI_INT, rank + 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             end = MPI_Wtime();
             double t_bounce = end - start;
-            printf("%d,%d,%d,%d,%f\n", i, rank, rank +1, p * size_of_int, t_bounce);
+            printf("%d,%d,%d,%d,%f,%s\n", i, rank, rank +1, p * size_of_int, t_bounce,name);
         }
     } else {
         for (i = 0; i < m; i++) {

@@ -18,6 +18,9 @@ int main( int argc, char* argv[] ) {
     double start, end;
     MPI_Comm_size( MPI_COMM_WORLD, &total_procs ); // number of process
     MPI_Comm_rank( MPI_COMM_WORLD, &this_proc );  //PID
+    int  rlen;
+    char name[MPI_MAX_PROCESSOR_NAME];
+    MPI_Get_processor_name( name, &rlen );
     // printf("exp,src,dst,number_of_packets,packet_size,time\n");
     for(int j = 1; j < nexp; j++){
         if (this_proc % 2 == 0) {
@@ -29,7 +32,7 @@ int main( int argc, char* argv[] ) {
             MPI_Recv(&ack, 1, MPI_INT, this_proc + 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             end = MPI_Wtime();
             double t_band = end - start;
-            printf("%d,%d,%d,%d,%d,%f\n", j, this_proc, this_proc + 1, np, psize * size_of_int, t_band);
+            printf("%d,%d,%d,%d,%d,%f,%s\n", j, this_proc, this_proc + 1, np, psize * size_of_int, t_band,name);
 
         } else
         {

@@ -10,12 +10,11 @@ void my_broadcast(int rank, int total_processes, int p, int size_of_int) {
     int recvbuffer[p];
 
     if (rank == 0) {
-        for (int i = 1; i < total_processes; i++) {
+        for (int i = total_processes -1; i >= 0; i--) {
             MPI_Send(sendbuffer, p, MPI_INT, i, 0, MPI_COMM_WORLD);
         }
-    } else {
-        MPI_Recv(recvbuffer, p, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    }
+    } 
+    MPI_Recv(recvbuffer, p, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 }
  
 int main(int argc, char* argv[]) {
@@ -30,6 +29,9 @@ int main(int argc, char* argv[]) {
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &n);      // number of processes
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);   // PID
+    int  rlen;
+    char name[MPI_MAX_PROCESSOR_NAME];
+    MPI_Get_processor_name( name, &rlen );
 
     i = 0;
     while (i < argc) {
@@ -54,15 +56,19 @@ int main(int argc, char* argv[]) {
     end = MPI_Wtime();
     double t_bcast = end - start;
     // version,dst,packet_size,time
-    printf("MPI_Bcast,%d,%d,%f\n", rank, p * size_of_int, t_bcast);
+    if(rank==0){
+        printf("MPI_Bcast,%d,%d,%f,%s\n", rank, p * size_of_int, t_bcast,name);
+    }
+    
 
     start = MPI_Wtime();
     my_broadcast(rank, n, p, size_of_int);
     end = MPI_Wtime();
     double t_my_bcast = end - start;
     // version,dst,packet_size,time
-    printf("my_broadcast,%d,%d,%f\n", rank, p * size_of_int, t_my_bcast);
-
+    if(rank==0){
+        printf("my_broadcast,%d,%d,%f,%s\n", rank, p * size_of_int, t_my_bcast,name);
+    }
     MPI_Finalize();
     return 0;
 }

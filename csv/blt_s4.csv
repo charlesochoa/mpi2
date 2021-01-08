@@ -1,0 +1,10 @@
+MPI_Bcast,0,4,0.001435,lab004-090
+my_broadcast,0,4,0.004978,lab004-090
+MPI_Bcast,0,40,0.001438,lab004-090
+my_broadcast,0,40,0.004896,lab004-090
+MPI_Bcast,0,400,0.001396,lab004-090
+my_broadcast,0,400,0.005163,lab004-090
+MPI_Bcast,0,4000,0.001443,lab004-090
+my_broadcast,0,4000,0.007130,lab004-090
+MPI_Bcast,0,40000,0.001451,lab004-090
+my_broadcast,0,40000,0.024105,lab004-090
