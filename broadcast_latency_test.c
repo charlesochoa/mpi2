@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
     start = MPI_Wtime();
     my_broadcast(rank, n, p, size_of_int);
     end = MPI_Wtime();
-    double t_bcast = end - start;
+    double t_my_bcast = end - start;
     // version,dst,packet_size,time
     printf("my_broadcast,%d,%d,%f\n", rank, p * size_of_int, t_my_bcast);
 
