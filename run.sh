@@ -16,26 +16,32 @@ mpicc broadcast_latency_test.c -o out/blt.o
 #    mpirun -n 8 --hostfile hf_s4.txt -mca btl_tcp_if_include br0 ./out/mlt.o -m 100 -p $i >> csv/mlt_s4.csv
 # done
 
-# for i in 1 10 100 1000 10000 100000
-# do
-#    echo "Running single pair multiprocess_bandwith_test..."
-#    mpirun -n 2 --hostfile hf_s4.txt -mca btl_tcp_if_include br0 ./out/mbt.o 100 $i 100 >> csv/spmbt_s4.csv
-# done
-
-# for i in 1 10 100 1000 10000 100000
-# do
-#    echo "Running multiprocess_bandwith_test..."
-#    mpirun -n 8 --hostfile hf_s4.txt -mca btl_tcp_if_include br0 ./out/mbt.o 100 $i 100 >> csv/mbt_s4.csv
-# done
-
-for i in 1 10 100 1000 10000
+for i in 1 10 100 1000 10000 100000
 do
-   for j in {0..100}
+   for j in 1 10 100 1000 10000 100000
    do
-      echo "Running broadcast_latency_test..."
-      mpirun -n 8 --hostfile hf_s4.txt -mca btl_tcp_if_include br0 ./out/blt.o -m 100 -p $i >> csv/blt_s4.csv
+      echo "Running multiprocess_bandwith_test..."
+      mpirun -n 2 --hostfile hf_s4.txt -mca btl_tcp_if_include br0 ./out/mbt.o $j $i 100 >> csv/spmbt_s4.csv
    done
 done
+
+# for i in 1 10 100 1000 10000 100000
+# do
+#    for j in 1 10 100 1000 10000 100000
+#    do
+#       echo "Running multiprocess_bandwith_test..."
+#       mpirun -n 8 --hostfile hf_s4.txt -mca btl_tcp_if_include br0 ./out/mbt.o $j $i 100 >> csv/mbt_s4.csv
+#    done
+# done
+
+# for i in 1 10 100 1000 10000
+# do
+#    for j in {0..100}
+#    do
+#       echo "Running broadcast_latency_test..."
+#       mpirun -n 8 --hostfile hf_s4.txt -mca btl_tcp_if_include br0 ./out/blt.o -m 100 -p $i >> csv/blt_s4.csv
+#    done
+# done
 
 # # 1 slot per machine
 # for i in 1 10 100 1000 10000 100000
